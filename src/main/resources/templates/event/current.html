@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Информация о производителе</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      color: #333333;
+    }
+
+    .university-info {
+      padding: 20px;
+      line-height: 1.6;
+      font-size: 1em;
+      color: #555555;
+    }
+
+    .university-info strong {
+      color: #333333;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px 0;
+    }
+
+    .btn {
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #007bff;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      border: none;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      cursor: pointer;
+      font-size: 0.9em;
+      border: none;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    form {
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 th:text="${event.eventName}">Название события</h1>
+  </div>
+
+  <div class="event-info">
+    <p><strong>Дата события:</strong> <span th:text="${event.eventDate}">Дата события</span></p>
+    <p><strong>Описание события:</strong> <span th:text="${event.eventDescription}">Описание производителя</span></p>
+  </div>
+
+  <div class="button-group">
+    <a th:href="@{/events/all}" class="btn">← Назад к списку</a>
+    <a th:href="@{/events/{id}/update(id=${event.id})}" class="btn">Редактировать</a>
+
+    <form th:method="post" th:action="@{/events/{id}(id=${event.id})}">
+      <input type="hidden" name="_method" value="DELETE" />
+      <button type="submit" class="btn delete-btn" onclick="return confirm('Вы уверены, что хотите удалить событие?')">Удалить</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

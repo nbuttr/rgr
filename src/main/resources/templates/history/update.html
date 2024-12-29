@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать историю</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Редактировать историю</h1>
+</header>
+
+<main>
+    <form th:action="@{/histories/{id}(id=${history.id})}" th:method="patch">
+
+        <input type="hidden" th:value="${history.id}" name="id">
+
+        <label for="subject">Предмет:</label>
+        <select id="subject" name="subjectId" required>
+            <option value="" disabled selected>Select subject</option>
+            <th:block th:each="subject : ${subjects}">
+                <option th:value="${subject.id}" th:text="${subject.subjectName}"></option>
+            </th:block>
+        </select>
+        <br><br>
+        <br>
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+
+<footer>
+    <a th:href="@{/histories/all}" class="back-button">← Вернуться к списку историй</a>
+</footer>
+</body>
+</html>

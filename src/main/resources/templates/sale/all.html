@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все продажи</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button-cell {
+            text-align: center;
+        }
+        .back-button {
+            text-decoration: none;
+            padding: 6px 12px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Все продажи</h1>
+</header>
+
+<main>
+
+    <div th:if="${#lists.isEmpty(producers)}">
+        <p>Нет доступных продаж</p>
+    </div>
+
+
+    <div th:if="${!#lists.isEmpty(sales)}">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id владельца</th>
+                <th>Id покупателя</th>
+                <th>Дата продажи</th>
+                <th>Место продажи</th>
+                <th>Id предмета</th>
+                <th>Id аукциона</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="sale : ${sales}">
+                <td th:text="${sale.id}"></td>
+                <td th:text="${sale.ownerId}"></td>
+                <td th:text="${sale.buyerId}"></td>
+                <td th:text="${sale.dateOfSell}"></td>
+                <td th:text="${sale.placeOfSell}"></td>
+                <td th:text="${sale.subjectId}"></td>
+                <td th:text="${sale.auctionId}"></td>
+                <td class="button-cell">
+                    <a th:href="@{/sales/{id}(id=${sale.id})}" class="back-button">Информация о продаже</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<a th:href="@{/sales/create}" class="back-button">← Добавить продажу</a>
+<a th:href="@{/home}" class="back-button"> Вернуться на домашнюю страницу</a>
+</body>
+</html>

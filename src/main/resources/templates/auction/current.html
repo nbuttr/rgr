@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация об аукционе</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .info {
+            margin-bottom: 20px;
+        }
+        .info p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        .info strong {
+            font-weight: bold;
+        }
+        .sales-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .sales-table th,
+        .sales-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .sales-table th {
+            background-color: #f4f4f9;
+            font-weight: bold;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .button-group a,
+        .button-group form button {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .button-group a:hover,
+        .button-group form button:hover {
+            background-color: #0056b3;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+        .delete-btn:hover {
+            background-color: #b02a37;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="'Аукцион: ' + ${auction.auctionDate}">Информация об аукционе</h1>
+
+    <div class="info">
+        <p><strong>ID аукциона:</strong> <span th:text="${auction.id}">ID</span></p>
+        <p><strong>Дата аукциона:</strong> <span th:text="${auction.auctionDate}">Дата</span></p>
+    </div>
+
+    <div>
+        <h2>Продажи на аукционе</h2>
+        <table class="sales-table">
+            <thead>
+            <tr>
+                <th>Id продажи</th>
+                <th>Id владельца</th>
+                <th>Id покупателя</th>
+                <th>Дата продажи</th>
+                <th>Место продажи</th>
+                <th>Id предмета</th>
+                <th>Id аукциона</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sale : ${auction.sales}">
+                <td th:text="${sale.id}">Id продажи</td>
+                <td th:text="${sale.ownerId}">Id владельца</td>
+                <td th:text="${sale.buyerId}">Id покупателя</td>
+                <td th:text="${sale.dateOfSell}">Дата продажи</td>
+                <td th:text="${sale.placeOfSell}">Место продажи</td>
+                <td th:text="${sale.subjectId}">Id предмета</td>
+                <td th:text="${sale.auctionId}">Id аукциона</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="button-group">
+        <a th:href="@{/auctions/all}" class="btn">← Назад ко всем аукционам</a>
+        <a th:href="@{/auctions/{id}/update(id=${auction.id})}" class="btn">Редактировать</a>
+        <form th:action="@{/auctions/{id}(id=${auction.id})}" th:method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button type="submit" class="btn delete-btn"
+                    onclick="return confirm('Вы уверены, что хотите удалить этот аукцион?')">Удалить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

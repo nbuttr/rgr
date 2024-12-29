@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать продажу</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Редактировать продажу</h1>
+</header>
+
+<main>
+    <form th:action="@{/sales/{id}(id=${sale.id})}" th:method="patch">
+
+        <input type="hidden" th:value="${sale.id}" name="id">
+
+
+        <label for="auction">Аукцион:</label>
+        <select id="auction" name="auctionId" required>
+            <option value="" disabled selected>Select Auction</option>
+
+            <th:block th:each="auction : ${auctions}">
+                <option th:value="${auction.id}" th:text="${auction.auctionDate}"></option>
+            </th:block>
+        </select>
+        <br><br>
+
+
+        <label for="owner">Владелец:</label>
+        <select id="owner" name="ownerId" required>
+            <option value="" disabled selected>Select Owner</option>
+            <th:block th:each="owner : ${owners}">
+                <option th:value="${owner.id}" th:text="${owner.firstName}"></option>
+            </th:block>
+        </select>
+        <br><br>
+
+        <label for="buyer">Покупатель:</label>
+        <select id="buyer" name="buyerId" required>
+            <option value="" disabled selected>Select Buyer</option>
+            <th:block th:each="buyer : ${buyers}">
+                <option th:value="${buyer.id}" th:text="${buyer.firstName}"></option>
+            </th:block>
+        </select>
+        <br><br>
+
+        <label for="subject">Предмет:</label>
+        <select id="subject" name="subjectId" required>
+            <option value="" disabled selected>Select Subject</option>
+            <th:block th:each="subject : ${subjects}">
+                <option th:value="${subject.id}" th:text="${subject.subjectName}"></option>
+            </th:block>
+        </select>
+        <br><br>
+
+        <label for="placeOfSell">Место продажи:</label>
+        <input type="text" id="placeOfSell" name="placeOfSell" required>
+        <br><br>
+
+        <label for="dateOfSell">Дата продажи:</label>
+        <input type="date" id="dateOfSell" name="dateOfSell" required>
+        <br><br>
+        <br>
+
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+
+<footer>
+    <a th:href="@{/sales/all}" class="back-button">← Вернуться к списку продаж</a>
+</footer>
+</body>
+</html>

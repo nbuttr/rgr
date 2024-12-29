@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .links {
+            margin: 0 auto;
+            max-width: 400px;
+        }
+        .links a {
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .links a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Добро пожаловать!</h1>
+<div class="links">
+    <a th:href="@{/owners/all}">Список владельцев</a>
+    <a th:href="@{/subjects/all}">Список предметов</a>
+    <a th:href="@{/sales/all}">Список продаж</a>
+    <a th:href="@{/auctions/all}">Список аукционов</a>
+    <a th:href="@{/histories/all}">Список историй</a>
+    <a th:href="@{/events/all}">Список предметов</a>
+    <a th:href="@{/producers/all}">Список производителей</a>
+</div>
+</body>
+</html>

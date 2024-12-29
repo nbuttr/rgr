@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать производителя</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Редактировать производителя</h1>
+</header>
+
+<main>
+    <form th:action="@{/producers/{id}(id=${producer.id})}" th:method="patch">
+
+        <input type="hidden" th:value="${producer.id}" name="id">
+
+
+        <label for="producerName">Название производителя</label>
+        <input type="text" id="producerName" name="producerName" th:value="${producer.producerName}" required>
+
+
+        <label for="country">Страна производителя</label>
+        <input type="text" id="country" name="country" th:value="${producer.country}" required>
+
+
+        <label for="yearOfFoundation">Год основания</label>
+        <input type="date" id="yearOfFoundation" name="yearOfFoundation" th:value="${producer.yearOfFoundation}" required>
+
+
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+
+<footer>
+    <a th:href="@{/producers/all}" class="back-button">← Вернуться к списку производителей</a>
+</footer>
+</body>
+</html>

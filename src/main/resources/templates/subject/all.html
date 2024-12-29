@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Auctions</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button-cell {
+            text-align: center;
+        }
+        .back-button {
+            text-decoration: none;
+            padding: 6px 12px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Все предметы</h1>
+</header>
+
+<main>
+
+    <div th:if="${#lists.isEmpty(subjects)}">
+        <p>Нет доступных предметов</p>
+    </div>
+
+
+    <div th:if="${!#lists.isEmpty(subjects)}">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Название предмета</th>
+                <th>Описание предмета</th>
+                <th>Год производства</th>
+                <th>Id владельца</th>
+                <th>Id производителя</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="subject : ${subjects}">
+                <td th:text="${subject.id}"></td>
+                <td th:text="${subject.subjectName}"></td>
+                <td th:text="${subject.description}"></td>
+                <td th:text="${subject.yearOfProduction}"></td>
+                <td th:text="${subject.ownerId}"></td>
+                <td th:text="${subject.producerId}"></td>
+                <td class="button-cell">
+                    <a th:href="@{/subjects/{id}(id=${subject.id})}" class="back-button">Информация о предмете</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<a th:href="@{/subjects/create}" class="back-button">← Создать предмет</a>
+<a th:href="@{/home}" class="back-button"> Вернуться на домашнюю страницу</a>
+</body>
+</html>

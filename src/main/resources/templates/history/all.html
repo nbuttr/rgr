@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все истории</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button-cell {
+            text-align: center;
+        }
+        .back-button {
+            text-decoration: none;
+            padding: 6px 12px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Все истории</h1>
+</header>
+
+<main>
+    <div th:if="${#lists.isEmpty(histories)}">
+        <p>No producers available.</p>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(histories)}">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id предмета</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="history : ${histories}">
+                <td th:text="${history.id}"></td>
+                <td th:text="${history.subjectId}"></td>
+                <td class="button-cell">
+                    <a th:href="@{/histories/{id}(id=${history.id})}" class="back-button">Информация о истории</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<a th:href="@{/histories/create}" class="back-button">← Создать историю</a>
+<a th:href="@{/home}" class="back-button"> Вернуться на домашнюю страницу</a>
+</body>
+</html>

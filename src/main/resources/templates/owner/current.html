@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о владельце</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #333333;
+        }
+
+        .owner-info, .section {
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 1em;
+            color: #555555;
+        }
+
+        .owner-info strong, .section strong {
+            color: #333333;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px 0;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #c95a1e;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            cursor: pointer;
+            font-size: 0.9em;
+            border: none;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        form {
+            display: inline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1 th:text="${owner.firstName}">Имя владельца</h1>
+        <h1 th:text="${owner.lastName}">Фамилия владельца</h1>
+    </div>
+
+    <div class="owner-info">
+        <p><strong>Адрес владельца:</strong> <span th:text="${owner.address}">Адрес владельца</span></p>
+        <p><strong>Мобильный номер владельца:</strong> <span th:text="${owner.mobileNumber}">Мобильный владельца</span></p>
+    </div>
+
+    <div class="section">
+        <h2>Предметы владельца</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id предмета</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Год производства</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subject : ${owner.subjects}">
+                <td th:text="${subject.id}">Id предмета</td>
+                <td th:text="${subject.subjectName}">Название</td>
+                <td th:text="${subject.description}">Описание</td>
+                <td th:text="${subject.yearOfProduction}">Год производства</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Продажи, где владелец выступал продавцом</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id продажи</th>
+                <th>Id предмета</th>
+                <th>Id покупателя</th>
+                <th>Дата продажи</th>
+                <th>Место продажи</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sale : ${owner.ownerSales}">
+                <td th:text="${sale.id}">Id продажи</td>
+                <td th:text="${sale.subjectId}">Id предмета</td>
+                <td th:text="${sale.buyerId}">Id покупателя</td>
+                <td th:text="${sale.dateOfSell}">Дата продажи</td>
+                <td th:text="${sale.placeOfSell}">Место продажи</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Продажи, где владелец выступал покупателем</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id покупки</th>
+                <th>Id предмета</th>
+                <th>Id продавца</th>
+                <th>Дата покупки</th>
+                <th>Место покупки</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="saleB : ${owner.buyerSales}">
+                <td th:text="${saleB.id}">Id покупки</td>
+                <td th:text="${saleB.subjectId}">Id предмета</td>
+                <td th:text="${saleB.ownerId}">Id продавца</td>
+                <td th:text="${saleB.dateOfSell}">Дата покупки</td>
+                <td th:text="${saleB.placeOfSell}">Место покупки</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="button-group">
+        <a th:href="@{/owners/all}" class="btn">← Назад к списку</a>
+        <a th:href="@{/owners/{id}/update(id=${owner.id})}" class="btn">Редактировать</a>
+
+        <form th:method="post" th:action="@{/owners/{id}(id=${owner.id})}">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn delete-btn" onclick="return confirm('Вы уверены, что хотите удалить владельца?')">Удалить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

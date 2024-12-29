@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать владельца</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Редактировать владельца</h1>
+</header>
+
+<main>
+    <form th:action="@{/owners/{id}(id=${owner.id})}" th:method="patch">
+
+        <input type="hidden" th:value="${owner.id}" name="id">
+
+
+        <label for="firstName">Имя владельца</label>
+        <input type="text" id="firstName" name="firstName" th:value="${owner.firstName}" required>
+
+
+        <label for="lastName">Фамилия владельца</label>
+        <input type="text" id="lastName" name="lastName" th:value="${owner.lastName}" required>
+
+
+        <label for="address">Адрес владельца</label>
+        <input type="text" id="address" name="address" th:value="${owner.address}" required>
+
+        <label for="mobileNumber">Мобильный номер владельца</label>
+        <input type="text" id="mobileNumber" name="mobileNumber" th:value="${owner.mobileNumber}" required>
+
+
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+
+<footer>
+    <a th:href="@{/owners/all}" class="back-button">← Вернуться к списку владельцев</a>
+</footer>
+</body>
+</html>
